@@ -3,9 +3,11 @@
     <br />
     <ul>
       <li v-for="metadata in image_metadata">
-        <img :src="metadata.url" />
-        <!-- <p v-if="show_metadata">{{  metadata }}</p> -->
+        <img :src="get_image_url(metadata.image_id)" />
+        <!-- <p>{{ metadata }}</p>
+        <p>{{ get_image_url(metadata.image_id) }}</p> -->
       </li>
+      <!-- <p v-if="show_metadata">{{  metadata }}</p> -->
       <li />
     </ul>
     <br />
@@ -25,18 +27,22 @@ export default {
   },
   methods: {
     get_all_image_urls() {
-      const path = "http://localhost:5000/images";
+      const path = "http://localhost:5000/images/gallery";
       axios
         .get(path)
         .then((res) => {
           // console.log(res);
           this.image_metadata = res.data;
-          // console.log(this.image_metadata)
+          console.log(this.image_metadata);
         })
         .catch((error) => {
           console.error(error);
         });
       // this.image_ = []
+    },
+    get_image_url(image_id) {
+      const path_base = "http://localhost:5000/image_library/";
+      return path_base + image_id;
     },
   },
   created() {
@@ -46,22 +52,6 @@ export default {
 </script>
 
 <style>
-/* @media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-} */
-
-/* #grid-container{
-  display: flex;
-  flex-flow: row wrap;
-
-  align-content: flex-start;
-  gap: 20px;
- } */
-
 ul {
   margin: 0 0 0 0;
   padding: 0;
@@ -72,37 +62,7 @@ ul {
 }
 
 li {
-  /* height: 40vh; */
-  flex-grow: 1;
-}
-
-img {
-  max-height: 100%;
-  min-width: 100%;
-  object-fit: cover;
-  vertical-align: bottom;
-}
-
-li:last-child {
-  flex-grow: 10;
-}
-
-br {
-  width: 100%;
-  border: 1px solid black;
-}
-
-ul {
-  margin: 0 0 0 0;
-  padding: 0;
-  list-style-type: none;
-
-  display: flex;
-  flex-wrap: wrap;
-}
-
-li {
-  /* height: 40vh; */
+  height: 40vh;
   flex-grow: 1;
 }
 
