@@ -1,23 +1,19 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from "vue-router";
 // import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
   <header>
-    <h1>
-      photelo
-    </h1>
+    <h1>photelo</h1>
     <div id="navbar">
       <p>
-        <a href="/gallery">gallery</a> | 
-        <a href="/submission">submit</a> | 
+        <a href="/gallery">gallery</a> | <a href="/submission">submit</a> |
         <a href="/voting">vote</a>
       </p>
     </div>
-    
   </header>
-  <div id="nav-border"/>
+  <div id="nav-border" />
 
   <RouterView />
 </template>
@@ -40,6 +36,4 @@ h1 {
   margin: 2% 5%;
   text-align: center;
 }
-
-
 </style>

@@ -3,7 +3,7 @@
     <br />
     <ul>
       <li v-for="metadata in image_metadata">
-        <img :src="get_image_url(metadata.image_id)" />
+        <img :src="get_image_url(metadata.id)" />
         <!-- <p>{{ metadata }}</p>
         <p>{{ get_image_url(metadata.image_id) }}</p> -->
       </li>
@@ -13,7 +13,6 @@
     <br />
   </div>
 </template>
-
 <script>
 import axios from "axios";
 // import { meta } from 'eslint-plugin-vue'
@@ -41,7 +40,7 @@ export default {
       // this.image_ = []
     },
     get_image_url(image_id) {
-      const path_base = "http://localhost:5000/image_library/";
+      const path_base = "http://localhost:5000/images/";
       return path_base + image_id;
     },
   },
