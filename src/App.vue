@@ -1,25 +1,23 @@
 <script setup>
 import { RouterLink, RouterView } from "vue-router";
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap";
+
+import Navbar from "./components/Navbar.vue";
+import Dropdown from "./components/Dropdown.vue";
+
 // import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
   <header>
-    <h1>photelo</h1>
-    <div id="navbar">
-      <p>
-        <a href="/gallery">gallery</a> | <a href="/submission">submit</a> |
-        <a href="/voting">vote</a>
-      </p>
-    </div>
+    <Navbar />
   </header>
-  <div id="nav-border" />
-
   <RouterView />
 </template>
 
 <style scoped>
-#navbar {
+/* #navbar {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -32,8 +30,7 @@ import { RouterLink, RouterView } from "vue-router";
 }
 
 h1 {
-  /* margin: auto; */
   margin: 2% 5%;
   text-align: center;
-}
+} */
 </style>

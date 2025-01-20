@@ -1,37 +1,34 @@
 <template>
-  <div>
-    <br />
-    <div>
-      <img :src="get_image_url(image_metadata[0].id)" />
-      <ul>
-        <li>{{ image_metadata[0].name }}</li>
-        <li>{{ image_metadata[0].id }}</li>
-        <li>{{ image_metadata[0].rating }}</li>
-        <li>{{ image_metadata[0].tags }}</li>
-      </ul>
-      <button @click="first_image_wins">Vote for Image 1</button>
-    </div>
-    <div>
-      <img :src="get_image_url(image_metadata[1].id)" />
-      <ul>
-        <li>{{ image_metadata[1].name }}</li>
-        <li>{{ image_metadata[1].id }}</li>
-        <li>{{ image_metadata[1].rating }}</li>
-        <li>{{ image_metadata[1].tags }}</li>
-      </ul>
-      <button @click="second_image_wins">Vote for Image 2</button>
-    </div>
-    <br />
+  <div class="alert alert-primary" v-show="showAlert">{{ alertMessage }}</div>
+  <div class="float-start">
+    <VotingContainer
+      :url="get_image_url(image_metadata[0].id)"
+      :metadata="image_metadata[0]"
+      :vote="first_image_wins"
+    />
+  </div>
+
+  <div class="float-end">
+    <VotingContainer
+      :url="get_image_url(image_metadata[1].id)"
+      :metadata="image_metadata[1]"
+      :vote="second_image_wins"
+    />
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import VotingContainer from "@/components/VotingContainer.vue";
+
 export default {
+  components: { VotingContainer },
   name: "VotingVue",
   data() {
     return {
       image_metadata: [],
+      showAlert: false,
+      alertMessage: "",
       // show_metadata: false,
     };
   },
@@ -41,38 +38,18 @@ export default {
       axios
         .get(path)
         .then((res) => {
-          // console.log(res);
           this.image_metadata = res.data;
+          console.log("OBtained new images");
           console.log(this.image_metadata);
         })
         .catch((error) => {
           console.error(error);
         });
-      // this.image_ = []
     },
     get_image_url(image_id) {
       const path_base = "http://localhost:5000/images/";
       return path_base + image_id;
     },
-    // submitVote(winner, loser) {
-    //   console.log("Winner: ", winner);
-    //   console.log("Loser: ", loser);
-
-    //   const base_route = "http://localhost:5000/vote/";
-    //   const route = base_route + winner + "/" + loser;
-
-    //   const tied = true;
-
-    //   axios
-    //     .post(route, { tied: tied })
-    //     .then((res) => {
-    //       // console.log(res);
-    //       console.log(res);
-    //     })
-    //     .catch((error) => {
-    //       console.error(error);
-    //     });
-    // },
     async handleVoteSubmit(winner_id, loser_id) {
       console.log("Winner: ", winner_id);
       console.log("Loser: ", loser_id);
@@ -83,10 +60,6 @@ export default {
       const formData = new FormData();
       formData.append("winner_id", winner_id);
       formData.append("loser_id", loser_id);
-      // const payload = {
-      //   data: this.addImageForm.file,
-      //   name: this.addImageForm.name,
-      // };
 
       try {
         const response = await fetch(route, {
@@ -123,7 +96,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 ul {
   margin: 0 0 0 0;
   padding: 0;
